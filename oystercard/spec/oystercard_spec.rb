@@ -26,8 +26,7 @@ describe Oystercard do
   describe "#deduct" do
     it "reduces the balance by amount given" do
       subject.top_up(Oystercard::LIMIT)
-      subject.deduct(30)       
-      expect(subject.balance).to eq (Oystercard::LIMIT - 30)
+      expect{ subject.deduct(30) }.to change{ subject.balance }.by -30
     end
   end
 
