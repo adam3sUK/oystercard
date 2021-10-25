@@ -1,9 +1,11 @@
 class Oystercard
   LIMIT = 90
   attr_reader :balance
+  attr_accessor :journey
 
   def initialize
     @balance = 0
+    @journey = false
   end
 
   def top_up(num)
@@ -15,10 +17,22 @@ class Oystercard
     @balance -= num
   end
 
+  def touch_in
+    @journey = true unless in_journey?
+  end
+
+  def touch_out
+    @journey = false if in_journey?
+  end
+
   private
 
   def limit_reached?(num)
     (num + @balance) > LIMIT 
+  end
+
+  def in_journey?
+    @journey
   end
   
 end
