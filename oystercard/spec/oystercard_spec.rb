@@ -32,12 +32,18 @@ describe Oystercard do
 
   describe "#touch_in" do
     it "sets journey to true" do
-      expect{ subject.touch_in }.to change{ subject.journey }.from(false).to(true)
+      subject.top_up(5)
+      expect { subject.touch_in }.to change{ subject.journey }.from(false).to(true)
+    end
+
+    it "raises and error if touching in with less than minimum balance" do
+      expect { subject.touch_in }.to raise_error "Funds below minimum"
     end
   end
 
   describe "#touch_out" do
     it "sets journey to false" do
+      subject.top_up(5)
       subject.touch_in
       expect{ subject.touch_out }.to change{ subject.journey }.from(true).to(false)
     end
